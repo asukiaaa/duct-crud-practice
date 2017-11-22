@@ -5,8 +5,49 @@
  :duct.module/web {}
  :duct.module/sql {}
 
+ ;; routes
  :duct.module/ataraxy
- {[:get "/example"] [:example]}
+ {[:get "/example"] [:example]
+  ["/users/"] {[:get ""] [:user-index]
+               [:get "new"] [:user-new]
+               [:post {body :params}] [:user-create body]
+               [:get id] [:user-show id]
+               [:get id "/edit"] [:user-edit id]
+               [:post id "/update" {body :params}] [:user-update id body]
+               [:get id "/delete"] [:user-destroy id]}}
 
  :duct-crud-practice.handler/example
- {:db #ig/ref :duct.database/sql}}
+ {:db #ig/ref :duct.database/sql}
+
+ :duct-crud-practice.handler/user-index
+ {:db #ig/ref :duct.database/sql}
+
+ :duct-crud-practice.handler/user-new
+ {:db #ig/ref :duct.database/sql}
+
+ :duct-crud-practice.handler/user-create
+ {:db #ig/ref :duct.database/sql}
+
+ :duct-crud-practice.handler/user-show
+ {:db #ig/ref :duct.database/sql}
+
+ :duct-crud-practice.handler/user-edit
+ {:db #ig/ref :duct.database/sql}
+
+ :duct-crud-practice.handler/user-update
+ {:db #ig/ref :duct.database/sql}
+
+ :duct-crud-practice.handler/user-destroy
+ {:db #ig/ref :duct.database/sql}
+
+ ;; migrations
+ :duct.migrator/ragtime
+ {:migrations [#ig/ref :duct-crud-practice/users]}
+
+ [:duct.migrator.ragtime/sql :duct-crud-practice/users]
+ {:up ["CREATE TABLE users (
+          id    SERIAL PRIMARY KEY,
+          name  varchar(255),
+          email varchar(255)
+        );"]
+  :down ["DROP TABLE users;"]}}

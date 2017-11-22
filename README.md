@@ -1,6 +1,11 @@
 # duct-crud-practice
 
-FIXME: description
+A CRUD application with using duct.
+
+**Warning**
+
+This application doesn't consider SQL Injection Prevention.
+You need to consider it to use for production.
 
 ## Developing
 
