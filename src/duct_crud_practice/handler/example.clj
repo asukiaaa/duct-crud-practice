@@ -49,9 +49,9 @@
   (html [:div "New User"
          (user-form "/users/" "post" user)]))
 
-(defn edit-user-view [user]
+(defn edit-user-view [user-id user]
   (html [:div "Edit User"
-         (user-form (str "/users/" (:id user) "/update") "put" user)]))
+         (user-form (str "/users/" user-id "/update") "put" user)]))
 
 (defmethod ig/init-key :duct-crud-practice.handler/user-new [_ options]
   (fn [{[_] :ataraxy/result}]
@@ -77,14 +77,14 @@
 (defmethod ig/init-key :duct-crud-practice.handler/user-edit [_ {:keys [db]}]
   (fn [{[_ id] :ataraxy/result}]
     (let [user (first (db.users/get-user db id))]
-      [::response/ok (edit-user-view user)])))
+      [::response/ok (edit-user-view id user)])))
 
 (defmethod ig/init-key :duct-crud-practice.handler/user-update [_ {:keys [db]}]
   (fn [{[_ id params] :ataraxy/result}]
     (if (not-empty (:name params))
       (let [user (first (db.users/update-user db id params))]
         [::response/found (str "/users/" (:id user))])
-      [::response/ok (edit-user-view params)])))
+      [::response/ok (edit-user-view id params)])))
 
 (defmethod ig/init-key :duct-crud-practice.handler/user-destroy [_ {:keys [db]}]
   (fn [{[_ id] :ataraxy/result}]
