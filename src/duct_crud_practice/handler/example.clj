@@ -31,11 +31,10 @@
             [:th "id"]
             [:th "name"]]]
           [:tbody
-           (doall
-            (for [user users]
-              [:tr
-               [:td [:a {:href (str "/users/" (:id user))} (:id user)]]
-               [:td (:name user)]]))]]]))
+           (for [user users]
+             [:tr
+              [:td [:a {:href (str "/users/" (:id user))} (:id user)]]
+              [:td (:name user)]])]]]))
 
 (defn show-user-view [user]
   (html [:div "User"
