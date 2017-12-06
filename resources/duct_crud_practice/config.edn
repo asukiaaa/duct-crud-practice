@@ -14,7 +14,7 @@
                [:get id] [:user-show id]
                [:get id "/edit"] [:user-edit id]
                [:post id "/update" {body :params}] [:user-update id body]
-               [:get id "/delete"] [:user-destroy id]}}
+               [:post id "/delete"] [:user-destroy id]}}
 
  :duct-crud-practice.handler/example
  {:db #ig/ref :duct.database/sql}

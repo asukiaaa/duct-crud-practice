@@ -42,8 +42,8 @@
          (pr-str user)
          [:div
           [:a {:href (str "/users/" (:id user) "/edit")} "edit"]
-          [:span " "]
-          [:a {:href (str "/users/" (:id user) "/delete")} "delete"]]]))
+          [:form {:action (str "/users/" (:id user) "/delete") :method "post"}
+           [:button {:type "submit"} "delete"]]]]))
 
 (defn error-messages-box [error-messages]
   (when error-messages
