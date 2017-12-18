@@ -11,12 +11,12 @@
 (defphraser not-empty
   {:via [::email]}
   [_ _]
-  "Please input email")
+  "Please input email.")
 
 (defphraser string?
   {:via [::email]}
   [_ _]
-  "Please input email as string")
+  "Please input email as string.")
 
 (defphraser email-format?
   {:via [::email]}
@@ -36,6 +36,10 @@
   {::name (:name user)
    ::email (:email user)})
 
+(defn spec-user->user [spec-user]
+  {:name (::name spec-user)
+   :email (::email spec-user)})
+
 (defn valid? [user]
   (s/valid? ::user (user->spec-user user)))
 
@@ -43,7 +47,12 @@
   (phrase-first {} ::user (user->spec-user user)))
 
 (defn error-messages [user]
-  (for [problem (some->> (user->spec-user user)
-                         (s/explain-data ::user)
-                         (::s/problems))]
-    (phrase {} problem)))
+  (->>
+   (for [problem (some->> (user->spec-user user)
+                          (s/explain-data ::user)
+                          (::s/problems))]
+     (let [message (phrase {} problem)
+           path (first (:path problem))]
+       [path message]))
+   (into {})
+   spec-user->user))

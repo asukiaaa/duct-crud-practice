@@ -11,15 +11,22 @@
   (fn [{[_] :ataraxy/result}]
     [::response/ok (html [:span "This is an example handler"])]))
 
-(defn user-form [action method user]
+(defn error-message-line [error]
+  [:div {:style "background: #fcc; margin-bottom: 5px;"} error])
+
+(defn user-form [action method user & {:keys [error-messages]}]
   [:form {:action action :method "post"}
    [:input {:name "_method" :value method :type "hidden"}]
    [:div
     [:label {:for "name"} "name"]
-    [:input {:name "name" :value (:name user)}]]
+    [:input {:name "name" :value (:name user)}]
+    (if-let [error (:name error-messages)]
+      (error-message-line error))]
    [:div
     [:label {:for "email"} "email"]
-    [:input {:name "email" :value (:email user)}]]
+    [:input {:name "email" :value (:email user)}]
+    (if-let [error (:email error-messages)]
+      (error-message-line error))]
    [:button {:type "submit"} "Submit"]])
 
 (defn show-users-view [users]
@@ -45,20 +52,15 @@
           [:form {:action (str "/users/" (:id user) "/delete") :method "post"}
            [:button {:type "submit"} "delete"]]]]))
 
-(defn error-messages-box [error-messages]
-  (when error-messages
-    (for [e error-messages]
-      [:p {:style "background: #fcc;"} e])))
-
 (defn new-user-view [user error-messages]
   (html [:div "New User"
-         (error-messages-box error-messages)
-         (user-form "/users/" "post" user)]))
+         (user-form "/users/" "post" user
+                    :error-messages error-messages)]))
 
 (defn edit-user-view [user-id user error-messages]
   (html [:div "Edit User"
-         (error-messages-box error-messages)
-         (user-form (str "/users/" user-id "/update") "put" user)]))
+         (user-form (str "/users/" user-id "/update") "put" user
+                    :error-messages error-messages)]))
 
 (defmethod ig/init-key :duct-crud-practice.handler/user-new [_ options]
   (fn [{[_] :ataraxy/result}]
