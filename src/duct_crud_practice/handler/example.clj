@@ -50,7 +50,9 @@
          [:div
           [:a {:href (str "/users/" (:id user) "/edit")} "edit"]
           [:form {:action (str "/users/" (:id user) "/delete") :method "post"}
-           [:button {:type "submit"} "delete"]]]]))
+           [:button {:type "submit"} "delete"]]]
+         [:div
+          [:a {:href "/users/"} "index"]]]))
 
 (defn new-user-view [user error-messages]
   (html [:div "New User"
