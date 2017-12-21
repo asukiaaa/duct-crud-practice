@@ -54,22 +54,20 @@ dev=> (reset)
 :resumed
 ```
 
-### Testing
+## Execute without repl
 
-Testing is fastest through the REPL, as you avoid environment startup
-time.
+You can execute system with passing database url.
 
 ```clojure
-dev=> (test)
-...
+DATABASE_URL="jdbc:postgresql://localhost/duct_crud_practice?user=clojure_user&password=secret" lein run
 ```
 
-But you can also run tests through Leiningen.
+## License
 
-```sh
-lein test
-```
+MIT
 
-## Legal
-
-Copyright © 2017 FIXME
+## References
+- [clojureのductでcrudアプリを作る方法](http://asukiaaa.blogspot.jp/2017/12/clojureductcrud.html)
+- [Advancing Duct](https://www.booleanknot.com/blog/2017/05/09/advancing-duct.html)
+- [Building services with Duct and compojure-api](https://yogthos.net/posts/2015-10-01-Compojure-API.html)
+- [How To Install and Use PostgreSQL on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04)
