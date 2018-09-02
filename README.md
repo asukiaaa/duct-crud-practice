@@ -43,7 +43,8 @@ dev=> (go)
 :initiated
 ```
 
-By default this creates a web server at <http://localhost:3000>.
+Access to <http://localhost:3000/users>.
+You can check path by referencing [handler files](src/duct_crud_practice/handler).
 
 When you make changes to your source files, use `reset` to reload any
 modified files and reset the server.
