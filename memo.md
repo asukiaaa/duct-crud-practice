@@ -1,6 +1,7 @@
 # Project initialization
 ```
 lein new duct duct-crud-practice +ataraxy +example +postgres
+cd ~/duct-crud-practice
 lein duct setup
 ```
 

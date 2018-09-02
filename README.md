@@ -11,6 +11,8 @@ You need to consider it to use for production.
 
 ### Setup
 
+You need to setup porgreSQL with referencing [this memo](./memo.md).
+
 When you first clone this repository, run:
 
 ```sh
